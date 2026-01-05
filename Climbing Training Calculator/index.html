@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Climbing Training Calculator</title>
+</head>
+<body>
+
+    <div id="formView">
+        <form id="trainingCalculator" action="#" method="post">
+
+
+            <!-- Strength and Power Category -->
+            <fieldset class="physiologicalCategory" id="strengthAndPower">
+                <legend>Strength and Power</legend>
+
+
+                <!-- Fingers -->
+                <div class="subCategory">
+                    <h5>Fingers</h5>
+
+                    <label for="fingersOffWallPercentage">What % of training do you want to do off the wall?</label>
+                    <input type="number" id="fingersOffWallPercentage" name="fingersOffWallPercentage" min="0" max="100" required>
+
+                    <label for="fingersRate">Improvement Rate:</label>
+                    <select id="fingersRate" name="fingersRate" required>
+                            <option value="maintain">Maintain</option>
+                            <option value="slow">Slow</option>
+                            <option value="fast">Fast</option>
+                    </select>
+                </div>
+
+                
+                <!-- Upper Body Pull = UBP -->
+                <div class="subCategory">
+                    <h5>Upper Body Pull</h5>
+
+                    <label for="ubpOffWallPercentage">What % of training do you want to do off the wall?</label>
+                    <input type="number" id="ubpOffWallPercentage" name="ubpOffWallPercentage" min="0" max="100" required>
+
+                    <label for="ubpRate">Improvement Rate:</label>
+                    <select id="ubpRate" name="ubpRate" required>
+                            <option value="maintain">Maintain</option>
+                            <option value="slow">Slow</option>
+                            <option value="fast">Fast</option>
+                    </select>
+                </div>
+            </fieldset>
+
+
+            <!-- Aerobic Category -->
+            <fieldset class="physiologicalCategory" id="aerobicCategory">
+                <legend>Climbing Specific Aerobic Endurance</legend>
+
+                    <label for="aerobicRate">Improvement Rate:</label>
+                    <select id="aerobicRate" name="aerobicRate" required>
+                        <option value="maintain">Maintain</option>
+                        <option value="slow">Slow</option>
+                        <option value="fast">Fast</option>
+                    </select>
+            </fieldset>
+
+
+            <!-- Do you anaerobic opens a hidden section -->
+            <fieldset>
+                <legend>Do you want to train anaerobic endurance as part of your program?</legend>
+                <label>
+                    <input type="radio" name="doYouAnaerobic" value="yes" required>
+                    Yes
+                </label>
+                <label>
+                    <input type="radio" name="doYouAnaerobic" value="no" required>
+                    No
+                </label>
+            </fieldset>
+
+
+            <!-- Anaerobic Category (hidden until yes)-->
+            <fieldset class="physiologicalCategory" id="anaerobicCategory" style="display: none;">
+                <legend>Climbing Specific Anaerobic Endurance</legend>
+                <!-- Category Rate Selector -->
+                <label for="anaerobicRate">Improvement Rate:</label>
+                <select id="anaerobicRate" name="anaerobicRate">
+                    <option value="maintain">Maintain</option>
+                    <option value="slow">Slow</option>
+                    <option value="fast">Fast</option>
+                </select>
+                <!-- Do you want to peak opens a hidden section -->
+                <fieldset id="doYouWantToPeak">
+                    <legend>Do you want to peak your LT3 within the next 10 weeks?</legend>
+                    <label>
+                        <input type="radio" name="peakRadios" value="yes">
+                        Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="peakRadios" value="no">
+                        No
+                    </label>
+                <!-- hidden section -->
+                    <div id="peakTimingSection" style="display: none;">
+                        <label for="weeksOutFromPeak">How many weeks until you want to peak?</label>
+                        <select name="weeksOutFromPeak" id="weeksOutFromPeak">
+                            <option value="5">5 weeks</option>
+                            <option value="10">10 weeks</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </fieldset>
+
+
+            <!-- General Aerobic Fitness = GAF -->
+            <fieldset>
+                <legend>General Aerobic Fitness</legend>
+
+                    <label for="gafRate">Improvement Rate:</label>
+                    <select id="gafRate" name="gafRate" required>
+                            <option value="maintain">Maintain</option>
+                            <option value="slow">Slow</option>
+                    </select>
+            </fieldset>
+        </form>
+    </div>
+
+
+    <div id="actionRow">
+        <button id="calculateButton" type="button">Calculate</button>
+        <!-- Score -->
+        <div id="scoreDisplay">Score: 0 / 10</div>
+    </div>
+
+
+    <div id="resultsView" class="hidden">
+        <h2>Your Training Plan</h2>
+        <div id="results"></div>
+        <button id="backButton">Back</button>
+    </div>
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>

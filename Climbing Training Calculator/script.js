@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // References
-    const anaerobicRadios = document.querySelectorAll('input[name="doYouAnaerobic"]');
+    const anaerobicCheckbox = document.getElementById('doYouAnaerobic');
     const anaerobicFieldset = document.getElementById('anaerobicCategory');
-    const peakRadios = document.querySelectorAll('input[name="peakRadios"]');
+    const peakCheckbox = document.getElementById('peakCheckbox');
     const peakTimingSection = document.getElementById('peakTimingSection');
     const anaerobicRate = document.getElementById('anaerobicRate');
     const weeksOutFromPeak = document.getElementById('weeksOutFromPeak');
@@ -20,54 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update functions
     function updateAnaerobicVisibility() {
-        const selected = document.querySelector('input[name="doYouAnaerobic"]:checked');
-        if (selected && selected.value === 'yes') {
-            show(anaerobicFieldset);
-            questionRequired(anaerobicRate, true);
-        } else {
-            hide(anaerobicFieldset);
-            questionRequired(anaerobicRate, false);
-        // hide nested peak section
-        const selectedPeakRadio = document.querySelector('input[name="peakRadios"]:checked');
-        if (selectedPeakRadio) selectedPeakRadio.checked = false;
-        }
+      if (anaerobicCheckbox.checked) {
+        show(anaerobicFieldset);
+      } else {
+        hide(anaerobicFieldset);
+
+        // Reset nested peak section
+        peakCheckbox.checked = false;
+        hide(peakTimingSection);
+        clearValue(weeksOutFromPeak);
+      }
     }
 
     function updatePeakTimingVisibility() {
-        const selected = document.querySelector('input[name="peakRadios"]:checked');
-        if (selected && selected.value === 'yes') {
+        if (peakCheckbox.checked) {
             show(peakTimingSection);
-            questionRequired(weeksOutFromPeak, true);
         } else {
             hide(peakTimingSection);
-            questionRequired(weeksOutFromPeak, false);
             clearValue(weeksOutFromPeak);
         }
     }
-
-    // Strength and Power Input Number Validation Restrictors
-    document.getElementById('fingersOffWallPercentage').addEventListener('input', function () {
-        if (this.value > 100) this.value = 100;
-        if (this.value < 0) this.value = 0;
-    });
-
-    document.getElementById('ubpOffWallPercentage').addEventListener('input', function () {
-        if (this.value > 100) this.value = 100;
-        if (this.value < 0) this.value = 0;
-    });
-
-
     
     // Visibility Listeners
-    anaerobicRadios.forEach(r => r.addEventListener('change', updateAnaerobicVisibility));
-    peakRadios.forEach(r => r.addEventListener('change', updatePeakTimingVisibility));
+    anaerobicCheckbox.addEventListener('change', updateAnaerobicVisibility);
+    peakCheckbox.addEventListener('change', updatePeakTimingVisibility);
 
     // Score Listeners
     document.querySelectorAll('select').forEach(sel => {
         sel.addEventListener('change', updateScoreDisplay);
     });
-    document.querySelectorAll('input[type="radio"]').forEach(r => {
-        r.addEventListener('change', updateScoreDisplay);
+    document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+        c.addEventListener('change', updateScoreDisplay);
     });
 
     // Stop Form Refreshing
@@ -173,8 +156,8 @@ function calculateAnaerobic() {
 
 // Peak Modifier (LT3)
 function calculatePeakAnaerobic(base) {
-  const peakChoice = document.querySelector('input[name="peakRadios"]:checked');
-  if (!peakChoice || peakChoice.value !== 'yes') return null;
+  const peakCheckbox = document.getElementById('peakCheckbox');
+  if (!peakCheckbox || !peakCheckbox.checked) return null;
 
   const weeks = parseInt(document.getElementById('weeksOutFromPeak').value, 10);
   if (isNaN(weeks)) return { lt2: base, lt3: null };
@@ -247,7 +230,7 @@ function calculateScore() {
 function updateScoreDisplay() {
     const score = calculateScore();
     const box = document.getElementById('scoreDisplay');
-    box.textContent = `Score: ${score} / 10`;
+    box.textContent = `Load Score: ${score} / 10`;
     box.classList.toggle('warning', score > 10);
 }
 
@@ -262,27 +245,27 @@ function displayResults(fingers, ubp, aerobic, anaerobicLT2, anaerobicLT3, gaf) 
     <p>Off-wall sets: ${ubp.offWallSetsMin}-${ubp.offWallSetsMax}</p>
     <p>On-wall sets: ${ubp.onWallSetsMin}-${ubp.onWallSetsMax}</p>
 
-    <h3>Aerobic Endurance</h3>
-    <p>Minutes: ${aerobic.min}-${aerobic.max}</p>
+    <h3>Aerobic Endurance (LT1)</h3>
+    <p>Minutes at LT1 Threshold: ${aerobic.min}-${aerobic.max}</p>
   `;
 
   if (anaerobicLT2) {
     html += `
       <h3>Anaerobic Endurance (LT2)</h3>
-      <p>Minutes: ${anaerobicLT2.min}-${anaerobicLT2.max}</p>
+      <p>Minutes at LT2 Threshold: ${anaerobicLT2.min}-${anaerobicLT2.max}</p>
     `;
   }
 
   if (anaerobicLT3) {
     html += `
-      <h3>Anaerobic Endurance (LT3)</h3>
-      <p>Sets: ${anaerobicLT3.min}-${anaerobicLT3.max}</p>
+      <h3>Anaerobic Endurance (Specific to Peak)</h3>
+      <p>Specific sets: ${anaerobicLT3.min}-${anaerobicLT3.max}</p>
     `;
   }
 
   html += `
-    <h3>General Aerobic Fitness</h3>
-    <p>Minutes: ${gaf.min}-${gaf.max}</p>
+    <h3>General Aerobic Fitness (LT1)</h3>
+    <p>Minutes at LT1 Threshold: ${gaf.min}-${gaf.max}</p>
   `;
 
   document.getElementById('results').innerHTML = html;

@@ -1,4 +1,6 @@
-/* ---------- Base Layout ---------- */
+/* --------------------------------------------------
+   Base Layout
+-------------------------------------------------- */
 
 body {
     font-family: system-ui, sans-serif;
@@ -8,7 +10,6 @@ body {
     color: #222;
 }
 
-/* Centered card layout for both views */
 #formView,
 #resultsView {
     max-width: 700px;
@@ -23,7 +24,9 @@ body {
     display: none;
 }
 
-/* ---------- Fieldsets ---------- */
+/* --------------------------------------------------
+   Fieldsets
+-------------------------------------------------- */
 
 fieldset {
     border: 1px solid #ddd;
@@ -38,15 +41,19 @@ legend {
     color: #2f5bd3;
 }
 
-/* ---------- Subcategories ---------- */
+/* --------------------------------------------------
+   Subcategories
+-------------------------------------------------- */
 
 .subCategory h5 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.5rem;
     font-size: 1rem;
     font-weight: 600;
 }
 
-/* ---------- Form Inputs ---------- */
+/* --------------------------------------------------
+   Form Inputs
+-------------------------------------------------- */
 
 label {
     display: block;
@@ -64,7 +71,7 @@ select {
     font-size: 1rem;
 }
 
-/* Radio buttons inline */
+/* Inline radio labels */
 fieldset label {
     display: inline-flex;
     align-items: center;
@@ -72,7 +79,9 @@ fieldset label {
     margin-right: 1rem;
 }
 
-/* ---------- Action Row (Calculate + Score) ---------- */
+/* --------------------------------------------------
+   Action Row (Calculate + Score)
+-------------------------------------------------- */
 
 #actionRow {
     display: flex;
@@ -81,7 +90,9 @@ fieldset label {
     margin-top: 1.5rem;
 }
 
-/* ---------- Buttons ---------- */
+/* --------------------------------------------------
+   Buttons
+-------------------------------------------------- */
 
 button {
     background-color: #4a7cff;
@@ -98,7 +109,7 @@ button:hover {
     background-color: #2f5bd3;
 }
 
-/* Secondary button (Back) */
+/* Back button */
 #backButton {
     background-color: #e5e5e5;
     color: #222;
@@ -109,7 +120,9 @@ button:hover {
     background-color: #d4d4d4;
 }
 
-/* ---------- Score Display ---------- */
+/* --------------------------------------------------
+   Score Display
+-------------------------------------------------- */
 
 #scoreDisplay {
     background: #4a7cff;
@@ -120,7 +133,16 @@ button:hover {
     font-size: 1rem;
 }
 
-/* ---------- Mobile Layout (phones) ---------- */
+/* Score warning state */
+#scoreDisplay.warning {
+    background: #ff4a4a;
+    color: white;
+}
+
+/* --------------------------------------------------
+   Mobile Layout
+-------------------------------------------------- */
+
 @media (max-width: 600px) {
 
     body {
@@ -152,26 +174,17 @@ button:hover {
         padding: 0.5rem;
     }
 
-    /* Action row: Calculate + Score */
+    /* Stack action row vertically */
     #actionRow {
         flex-direction: column;
         align-items: stretch;
         gap: 0.8rem;
     }
 
-    #actionRow button {
-        width: 100%;
-    }
-
-    #scoreDisplay {
-        width: 100%;
-        text-align: center;
-        padding: 0.7rem;
-        font-size: 1rem;
-    }
-
-    /* Back button on results page */
+    #actionRow button,
+    #scoreDisplay,
     #backButton {
         width: 100%;
+        text-align: center;
     }
 }
